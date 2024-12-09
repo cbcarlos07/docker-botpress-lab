@@ -1,4 +1,3 @@
-version: '2'
 
 volumes:
   mongodb_data: { driver: local }
@@ -40,6 +39,10 @@ services:
       - ${PORT:-3000}
     ports:
       - "${BIND_IP:-0.0.0.0}:${HOST_PORT:-3000}:${PORT:-3000}"
+#    networks:
+#      - rocketchat
+    
+    
 
   mongodb:
     image: docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.4}
@@ -80,7 +83,8 @@ services:
       - ./actions/rocketchat:/botpress/data/global/actions/rocketchat
     ports:
       - "3001:3000"
-
+#    networks:
+#      - rocketchat
   # botpress_lang:
   #   image: botpress-lang
   #   command: bash -c "./duckling -p 8000 & ./bp lang --langDir /botpress/lang --port 3100"
@@ -116,3 +120,9 @@ services:
     image: mailhog/mailhog:latest
     ports:
       - "8025:8025"
+
+#networks:
+#  web:
+#    external: true
+#  rocketchat:
+#    external: true
